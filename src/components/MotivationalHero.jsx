@@ -57,7 +57,7 @@ export default function MotivationalHero() {
           <div className="flex-shrink-0 grid grid-cols-2 gap-4">
             <div className="bg-slate-800/40 backdrop-blur-md border border-slate-700 p-4 rounded-2xl flex flex-col items-center justify-center min-w-[120px] transform transition-all hover:scale-105 hover:border-yellow-500/50">
               <Zap className="w-8 h-8 text-yellow-400 mb-2" />
-              <span className="text-2xl font-bold text-white">12</span>
+              <span className="text-2xl font-bold text-white">0</span>
               <span className="text-[10px] text-slate-400 uppercase tracking-widest mt-1">Day Streak</span>
             </div>
             <div className="bg-slate-800/40 backdrop-blur-md border border-slate-700 p-4 rounded-2xl flex flex-col items-center justify-center min-w-[120px] transform transition-all hover:scale-105 hover:border-purple-500/50">
