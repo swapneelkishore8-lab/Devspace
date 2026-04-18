@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Tracker - Fixed</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Personal Habit Tracker</h1>
+            <p>Track your daily habits and goals - Fixed!</p>
+        </header>
+        <form id="habitForm">
+            <input type="text" id="habitName" placeholder="Habit name (e.g., Exercise, Code 1hr)" required>
+            <input type="text" id="habitDesc" placeholder="Description">
+            <button type="submit">Add Habit</button>
+        </form>
+        <ul id="habitList"></ul>
+        <div id="message"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
