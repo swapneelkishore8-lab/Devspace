@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { TerminalSquare, Calendar as CalendarIcon, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
-export default function TerminalWorkspace() {
-  const [terminalTasks, setTerminalTasks] = useLocalStorage('terminal_tasks', [
-    { id: 1, text: 'sudo rm -rf distractions', completed: true },
-    { id: 2, text: 'git commit -m "another productive day"', completed: false },
-  ]);
+export default function TerminalWorkspace({ updateStreakLog }) {
+  const [terminalTasks, setTerminalTasks] = useLocalStorage('v2_terminal_tasks', []);
   const [inputText, setInputText] = useState('');
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -24,7 +21,13 @@ export default function TerminalWorkspace() {
   };
 
   const toggleTask = (id) => {
-    setTerminalTasks(terminalTasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+    setTerminalTasks(terminalTasks.map(t => {
+      if (t.id === id) {
+        if (!t.completed && updateStreakLog) updateStreakLog();
+        return { ...t, completed: !t.completed };
+      }
+      return t;
+    }));
   };
 
   const removeTask = (id) => {

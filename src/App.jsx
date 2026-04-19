@@ -8,20 +8,25 @@ import ProfileLinks from './components/ProfileLinks';
 import { CodeSquare } from 'lucide-react';
 
 function App() {
-  const [tasks, setTasks] = useLocalStorage('tracker_tasks', [
-    { id: 1, text: 'Complete 2 LeetCode Mediums', completed: false },
-    { id: 2, text: 'Review OS Chapter 3', completed: false },
-  ]);
+  const [tasks, setTasks] = useLocalStorage('v2_tasks', []);
+  const [goals, setGoals] = useLocalStorage('v2_goals', []);
+  const [subjects, setSubjects] = useLocalStorage('v2_subjects', []);
+  const [streakData, setStreakData] = useLocalStorage('v2_streak', { count: 0, lastDate: null });
 
-  const [goals, setGoals] = useLocalStorage('tracker_goals', [
-    { id: 1, text: 'Score 90%+ in Finals', completed: false },
-    { id: 2, text: 'Reach Specialist on Codeforces', completed: false },
-  ]);
+  const kpiCount = tasks.filter(t => t.completed).length + goals.filter(g => g.completed).length;
 
-  const [subjects, setSubjects] = useLocalStorage('tracker_subjects', [
-    { id: 1, name: 'Data Structures', progress: 80, target: 'A+' },
-    { id: 2, name: 'Operating Systems', progress: 40, target: 'A' },
-  ]);
+  const updateStreakLog = () => {
+    const today = new Date().toDateString();
+    if (streakData.lastDate !== today) {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        if (streakData.lastDate === yesterday.toDateString()) {
+            setStreakData({ count: streakData.count + 1, lastDate: today });
+        } else {
+            setStreakData({ count: 1, lastDate: today });
+        }
+    }
+  };
 
   return (
     <div className="min-h-screen pb-12 bg-slate-900 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))]">
@@ -45,11 +50,12 @@ function App() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 md:px-6 relative">
-        <MotivationalHero />
-        <TerminalWorkspace />
+        <MotivationalHero kpiCount={kpiCount} streakCount={streakData.count} />
+        <TerminalWorkspace updateStreakLog={updateStreakLog} />
         <Dashboard 
           tasks={tasks} setTasks={setTasks} 
           goals={goals} setGoals={setGoals} 
+          updateStreakLog={updateStreakLog}
         />
         <SubjectTracker 
           subjects={subjects} setSubjects={setSubjects} 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CheckCircle, Circle, Plus, Trash2 } from 'lucide-react';
 
-export default function Dashboard({ goals, setGoals, tasks, setTasks }) {
+export default function Dashboard({ goals, setGoals, tasks, setTasks, updateStreakLog }) {
   const [newTask, setNewTask] = useState('');
   const [newGoal, setNewGoal] = useState('');
 
@@ -13,7 +13,13 @@ export default function Dashboard({ goals, setGoals, tasks, setTasks }) {
   };
 
   const toggleTask = (id) => {
-    setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+    setTasks(tasks.map(t => {
+      if (t.id === id) {
+        if (!t.completed && updateStreakLog) updateStreakLog();
+        return { ...t, completed: !t.completed };
+      }
+      return t;
+    }));
   };
 
   const deleteTask = (id) => {
@@ -28,7 +34,13 @@ export default function Dashboard({ goals, setGoals, tasks, setTasks }) {
   };
 
   const toggleGoal = (id) => {
-    setGoals(goals.map(g => g.id === id ? { ...g, completed: !g.completed } : g));
+    setGoals(goals.map(g => {
+      if (g.id === id) {
+        if (!g.completed && updateStreakLog) updateStreakLog();
+        return { ...g, completed: !g.completed };
+      }
+      return g;
+    }));
   };
 
   const deleteGoal = (id) => {
